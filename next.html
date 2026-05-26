@@ -3,179 +3,341 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-content="width=device-width,initial-scale=1">
+content="width=device-width,
+initial-scale=1,
+viewport-fit=cover">
 
-<title>Dendrobium SYSTEM</title>
+<title>DENDROBIUM // CONNECTED</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+<link
+href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
 rel="stylesheet">
 
 <style>
 
-body{
-background:black;
-color:#ff3030;
-font-family:'Share Tech Mono',monospace;
+*{
 margin:0;
-overflow:hidden;
+padding:0;
+box-sizing:border-box;
 }
 
-.scan{
+body{
+
+background:#040404;
+color:#ff4040;
+
+font-family:
+'Share Tech Mono',
+monospace;
+
+height:100vh;
+overflow:hidden;
+
+padding:
+env(safe-area-inset-top)
+10px
+env(safe-area-inset-bottom);
+
+}
+
+body:before{
+
+content:"";
 
 position:fixed;
-width:100%;
-height:100%;
-pointer-events:none;
+inset:0;
 
 background:
 repeating-linear-gradient(
 transparent 0px,
-rgba(255,255,255,.02) 2px,
+rgba(255,255,255,.03) 2px,
 transparent 4px
 );
 
-animation:scan 8s linear infinite;
+pointer-events:none;
+
+animation:
+scan 8s linear infinite;
+
+opacity:.4;
+
 }
 
 @keyframes scan{
 
 from{
-transform:translateY(-100%);
+transform:
+translateY(-100%);
 }
 
 to{
-transform:translateY(100%);
+transform:
+translateY(100%);
 }
 
 }
 
 .frame{
 
-position:absolute;
-top:30px;
-left:30px;
-right:30px;
-bottom:30px;
+height:100%;
 
-border:1px solid #ff2020;
+border:1px solid #ff3030;
 
 box-shadow:
-0 0 20px #f00 inset,
-0 0 20px #f00;
+0 0 20px red inset,
+0 0 25px rgba(255,0,0,.4);
 
-padding:30px;
+padding:12px;
+
+display:flex;
+flex-direction:column;
+
 }
 
-.title{
+.header{
 
-font-size:32px;
+display:flex;
+
+justify-content:
+space-between;
+
 border-bottom:
-1px solid #f00;
+1px solid #882222;
 
-padding-bottom:10px;
+padding-bottom:8px;
 
-}
+font-size:14px;
 
-.warn{
-
-margin-top:30px;
-font-size:22px;
 }
 
 .big{
 
-font-size:60px;
-margin-top:20px;
+margin-top:15px;
+
+font-size:
+clamp(32px,10vw,60px);
 
 text-shadow:
+
 0 0 10px red,
-0 0 30px red;
+0 0 20px red;
 
 animation:
 glitch .2s infinite;
+
 }
 
 @keyframes glitch{
 
-0%{
-transform:translate(0);
-}
-
 25%{
 transform:
-translate(-2px,1px);
+translateX(-2px);
 }
 
 50%{
 transform:
-translate(2px,-1px);
+translateX(2px);
 }
 
 75%{
 transform:
-translate(-1px,-2px);
+translateX(-1px);
 }
 
 }
 
-.box{
+.info{
 
-margin-top:40px;
+margin-top:15px;
 
-border:1px solid #f00;
-padding:20px;
+font-size:13px;
+
+line-height:1.8;
+
+border:1px solid #441111;
+
+padding:12px;
+
+background:black;
 
 }
 
 .unlock{
 
-color:white;
-margin-top:20px;
+margin-top:15px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
 }
 
-.typing:after{
+.item{
 
-content:"_";
-animation:blink 1s infinite;
+display:flex;
+
+justify-content:
+space-between;
+
+padding:12px;
+
+border:1px solid #551111;
+
+background:#090909;
+
 }
 
-@keyframes blink{
+.lock{
+
+color:#888;
+}
+
+.ok{
+
+color:#ff4040;
+
+text-shadow:
+0 0 10px red;
+
+}
+
+.statusBox{
+
+margin-top:15px;
+
+padding:20px;
+
+border:1px solid red;
+
+text-align:center;
+
+}
+
+#net{
+
+font-size:42px;
+
+margin-top:10px;
+
+animation:
+pulse 1s infinite;
+
+}
+
+@keyframes pulse{
 
 50%{
-opacity:0;
+opacity:.4;
 }
+
+}
+
+.log{
+
+margin-top:auto;
+
+height:120px;
+
+overflow:auto;
+
+font-size:11px;
+
+padding:8px;
+
+border:1px solid #331111;
+
+background:black;
+
+line-height:1.6;
+
+}
+
+.footer{
+
+margin-top:8px;
+
+display:flex;
+
+justify-content:
+space-between;
+
+font-size:10px;
+
+opacity:.6;
 
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="scan"></div>
-
 <div class="frame">
 
-<div class="title">
+<div class="header">
+
+<div>
 ▣ SYSTEM MESSAGE
 </div>
 
-<div class="warn">
-
-接続要求を確認
+<div>
+SYS-001
+</div>
 
 </div>
+
 
 <div class="big">
+
 DENDROBIUM
+
 </div>
 
-<div class="box">
+<div class="info">
 
-通信状態：
+接続要求を確認。<br>
 
-<div id="status">
+対象インスタンス同期完了。<br>
+
+通信障害を迂回し、暫定接続を確立しました。<br><br>
+
+参加者の同期状態を確認しています...
+
+</div>
+
+
+<div class="unlock">
+
+<div class="item">
+<div>VOICE CHAT</div>
+<div id="v1" class="lock">
+LOCK
+</div>
+</div>
+
+<div class="item">
+<div>CAMERA ACCESS</div>
+<div id="v2" class="lock">
+LOCK
+</div>
+</div>
+
+<div class="item">
+<div>VISUAL LINK</div>
+<div id="v3" class="lock">
+LOCK
+</div>
+</div>
+
+</div>
+
+<div class="statusBox">
+
+通信状態
+
+<div id="net">
 
 ERROR
 
@@ -183,63 +345,129 @@ ERROR
 
 </div>
 
-<div class="unlock">
+<div id="log"
+class="log">
 
-<div id="text"
-class="typing"></div>
+> synchronization start...<br>
 
+</div>
+
+<div class="footer">
+
+<div>
+SESSION : 2026.08.07
+</div>
+
+<div>
+SYNCHRONIZATION REQUIRED
 </div>
 
 </div>
+
+</div>
+
 
 <script>
 
-const msg=[
+const log=
+document
+.getElementById(
+"log"
+);
 
-"参加者同期プロセス開始",
-"通信障害検出",
-"機能ロック確認",
-"TEXT CHAT解放",
-"VOICE LOCK",
-"CAMERA LOCK",
-"VISUAL LINK LOCK",
-"条件達成待機..."
+function add(t){
+
+log.innerHTML+=
+"> "+t+"<br>";
+
+log.scrollTop=
+log.scrollHeight;
+
+}
+
+const seq=[
+
+"instance verified",
+
+"participant sync",
+
+"recovering network",
+
+"unlock protocol",
+
+"voice unlocked",
+
+"camera unlocked",
+
+"visual link unlocked",
+
+"connection stable"
 
 ];
 
 let i=0;
 
-function type(){
+function next(){
 
-if(i<msg.length){
+if(i>=seq.length)
+return;
 
-document
-.getElementById(
-"text"
-)
-.innerHTML+=
-msg[i]+"<br>";
+add(seq[i]);
+
+if(i==4){
+
+v1.innerHTML=
+"ONLINE";
+
+v1.className=
+"ok";
+
+}
+
+if(i==5){
+
+v2.innerHTML=
+"ONLINE";
+
+v2.className=
+"ok";
+
+}
+
+if(i==6){
+
+v3.innerHTML=
+"ONLINE";
+
+v3.className=
+"ok";
+
+}
+
+if(i==7){
+
+net.innerHTML=
+"CONNECTED";
+
+navigator.vibrate?.(
+[100,50,100,50,100]
+);
+
+}
 
 i++;
 
-setTimeout(type,900);
+setTimeout(
+next,
+900
+);
 
 }
 
-}
-
-type();
-
-setTimeout(()=>{
-
-document
-.getElementById(
-"status"
-)
-innerHTML=
-"CONNECTED";
-
-},6000)
+setTimeout(
+next,
+1000
+);
 
 </script>
 
