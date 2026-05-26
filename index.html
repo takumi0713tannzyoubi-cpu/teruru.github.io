@@ -2,82 +2,394 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>5×5パターン認識</title>
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>DENDROBIUM // SYS-001</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+rel="stylesheet">
 
 <style>
+
+*{
+box-sizing:border-box;
+}
+
 body{
-    margin:0;
-    background:#111;
-    color:white;
-    text-align:center;
-    font-family:sans-serif;
+margin:0;
+background:#050505;
+font-family:'Share Tech Mono',monospace;
+color:#ff3a3a;
+overflow:hidden;
 }
-video{
-    width:95vw;
-    max-width:500px;
-    border:3px solid white;
-    margin-top:20px;
+
+.scan{
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+
+background:
+repeating-linear-gradient(
+transparent 0px,
+rgba(255,255,255,.02) 2px,
+transparent 4px
+);
+
+animation:scan 8s linear infinite;
+z-index:100;
 }
+
+@keyframes scan{
+from{
+transform:translateY(-100%);
+}
+to{
+transform:translateY(100%);
+}
+}
+
+.frame{
+position:absolute;
+top:15px;
+left:15px;
+right:15px;
+bottom:15px;
+
+border:1px solid #ff2b2b;
+
+box-shadow:
+0 0 15px red inset,
+0 0 20px rgba(255,0,0,.5);
+
+padding:20px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+font-size:20px;
+border-bottom:1px solid #ff2b2b;
+padding-bottom:10px;
+}
+
+.title{
+font-size:14px;
+margin-top:10px;
+line-height:1.8;
+}
+
 #status{
-    font-size:22px;
-    margin:15px;
+font-size:40px;
+margin-top:15px;
+
+text-shadow:
+0 0 10px red,
+0 0 20px red;
+
+animation:glitch .2s infinite;
 }
-canvas{
- display:none;
+
+@keyframes glitch{
+
+25%{
+transform:translate(-2px);
 }
+
+50%{
+transform:translate(2px);
+}
+
+75%{
+transform:translate(-1px);
+}
+
+}
+
+.cameraWrap{
+position:relative;
+margin-top:20px;
+display:flex;
+justify-content:center;
+}
+
+video{
+
+width:90vw;
+max-width:430px;
+
+border:1px solid red;
+
+filter:
+contrast(1.2)
+brightness(.9);
+
+}
+
+.target{
+
+position:absolute;
+width:220px;
+height:220px;
+
+border:2px solid #ff2b2b;
+
+top:50%;
+left:50%;
+
+transform:
+translate(-50%,-50%);
+}
+
+.corner{
+position:absolute;
+width:20px;
+height:20px;
+border:3px solid red;
+}
+
+.c1{
+top:-3px;
+left:-3px;
+border-right:none;
+border-bottom:none;
+}
+
+.c2{
+top:-3px;
+right:-3px;
+border-left:none;
+border-bottom:none;
+}
+
+.c3{
+bottom:-3px;
+left:-3px;
+border-right:none;
+border-top:none;
+}
+
+.c4{
+bottom:-3px;
+right:-3px;
+border-left:none;
+border-top:none;
+}
+
+.log{
+
+margin-top:20px;
+font-size:14px;
+height:160px;
+overflow:hidden;
+
+border:1px solid #401010;
+padding:10px;
+background:black;
+
+}
+
+.typing:after{
+content:"_";
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+50%{
+opacity:0;
+}
+}
+
+.small{
+
+position:absolute;
+bottom:20px;
+left:20px;
+
+font-size:12px;
+opacity:.7;
+}
+
 </style>
+
 </head>
+
 <body>
 
-<h2>穴あきシート認識</h2>
+<div class="scan"></div>
 
-<div id="status">
-カメラ起動中...
+<div class="frame">
+
+<div class="header">
+<div>▣ SYSTEM MESSAGE</div>
+<div>SYS-001</div>
 </div>
 
-<video id="video" autoplay playsinline></video>
-<canvas id="canvas"></canvas>
+<div class="title">
+
+接続要求を確認。<br>
+
+対象インスタンス：<br>
+
+《 Dendrobium 》<br><br>
+
+参加者同期プロセス開始
+
+</div>
+
+<div id="status">
+ERROR
+</div>
+
+<div class="cameraWrap">
+
+<video
+id="video"
+autoplay
+playsinline></video>
+
+<div class="target">
+
+<div class="corner c1"></div>
+<div class="corner c2"></div>
+<div class="corner c3"></div>
+<div class="corner c4"></div>
+
+</div>
+
+</div>
+
+<div
+id="log"
+class="log typing">
+
+通信待機...
+
+</div>
+
+<div class="small">
+SESSION START : 2026.08.07
+</div>
+
+</div>
+
+<canvas
+id="canvas"
+style="display:none">
+</canvas>
 
 <script>
 
 const pattern=[
+
 [1,0,0,0,0],
 [0,0,1,0,0],
 [0,0,0,0,1],
 [0,1,0,0,0],
 [0,0,0,1,0]
+
 ];
 
-const video=document.getElementById("video");
-const canvas=document.getElementById("canvas");
-const ctx=canvas.getContext("2d");
+const video=
+document.getElementById("video");
 
-navigator.mediaDevices.getUserMedia({
-video:{
- facingMode:"environment"
+const canvas=
+document.getElementById("canvas");
+
+const ctx=
+canvas.getContext("2d");
+
+const status=
+document.getElementById("status");
+
+const log=
+document.getElementById("log");
+
+function addLog(t){
+
+log.innerHTML+=
+"<br>> "+t;
+
+log.scrollTop=
+log.scrollHeight;
+
 }
+
+navigator.mediaDevices
+.getUserMedia({
+
+video:{
+facingMode:"environment"
+}
+
 })
+
 .then(stream=>{
- video.srcObject=stream;
- document.getElementById(
- "status"
- ).innerText="認識待機";
- start();
+
+video.srcObject=
+stream;
+
+addLog(
+"CAMERA CONNECTED"
+);
+
+setInterval(
+checkPattern,
+500
+);
+
+})
+.catch(e=>{
+
+addLog(
+"CAMERA ERROR"
+);
+
 });
 
-function start(){
+function sample(x,y){
 
-setInterval(checkPattern,300);
+let sum=0;
+let count=0;
+
+for(let dx=-4;dx<=4;dx++){
+
+for(let dy=-4;dy<=4;dy++){
+
+let d=
+ctx.getImageData(
+x+dx,
+y+dy,
+1,
+1
+).data;
+
+sum+=
+(d[0]+
+d[1]+
+d[2])/3;
+
+count++;
+
+}
+
+}
+
+return sum/count;
 
 }
 
 function checkPattern(){
 
-if(video.videoWidth===0)return;
+if(video.videoWidth==0)
+return;
 
-canvas.width=video.videoWidth;
-canvas.height=video.videoHeight;
+canvas.width=
+video.videoWidth;
+
+canvas.height=
+video.videoHeight;
 
 ctx.drawImage(
 video,
@@ -85,70 +397,86 @@ video,
 0
 );
 
-let w=canvas.width;
-let h=canvas.height;
+let w=
+canvas.width;
 
-let size=Math.min(w,h)*0.6;
+let h=
+canvas.height;
 
-let startX=(w-size)/2;
-let startY=(h-size)/2;
+let size=
+Math.min(w,h)
+*.45;
 
-let cell=size/5;
+let sx=
+(w-size)/2;
 
-let result=[];
+let sy=
+(h-size)/2;
 
-for(let y=0;y<5;y++){
-
-result[y]=[];
-
-for(let x=0;x<5;x++){
-
-let px=
-startX+x*cell+cell/2;
-
-let py=
-startY+y*cell+cell/2;
-
-let d=ctx.getImageData(
-px,
-py,
-1,
-1
-).data;
-
-let gray=
-(d[0]+d[1]+d[2])/3;
-
-result[y][x]=(gray<128)?1:0;
-
-}
-
-}
+let cell=
+size/5;
 
 let ok=true;
 
 for(let y=0;y<5;y++){
+
 for(let x=0;x<5;x++){
 
+let px=
+sx+
+x*cell+
+cell/2;
+
+let py=
+sy+
+y*cell+
+cell/2;
+
+let gray=
+sample(
+px,
+py
+);
+
+let val=
+(gray<128)?1:0;
+
 if(
-result[y][x]
-!=pattern[y][x]
+val!=
+pattern[y][x]
 ){
 
 ok=false;
 
 }
+
 }
+
 }
 
 if(ok){
 
-document.getElementById(
-"status"
-).innerText="認識成功";
+status.innerHTML=
+"ACCESS";
+
+addLog(
+"PATTERN ACCEPTED"
+);
+
+addLog(
+"VOICE CHAT UNLOCK"
+);
+
+addLog(
+"VISUAL LINK READY"
+);
+
+setTimeout(()=>{
 
 location.href=
 "next.html";
+
+},2500);
 
 }
 
