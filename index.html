@@ -3,150 +3,228 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
-content="width=device-width,initial-scale=1">
+content="width=device-width,
+initial-scale=1,
+viewport-fit=cover">
 
-<title>DENDROBIUM // SYS-001</title>
+<title>DENDROBIUM SYS-001</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link
+href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
 rel="stylesheet">
 
 <style>
 
 *{
 box-sizing:border-box;
+margin:0;
+padding:0;
 }
 
 body{
-margin:0;
+
 background:#050505;
-font-family:'Share Tech Mono',monospace;
-color:#ff3a3a;
+color:#ff4040;
+
+font-family:
+'Share Tech Mono',
+monospace;
+
+height:100vh;
+
 overflow:hidden;
+
+padding:
+env(safe-area-inset-top)
+10px
+env(safe-area-inset-bottom);
+
 }
 
-.scan{
+body:before{
+
+content:"";
+
 position:fixed;
-width:100%;
-height:100%;
-pointer-events:none;
+inset:0;
 
 background:
 repeating-linear-gradient(
 transparent 0px,
-rgba(255,255,255,.02) 2px,
+rgba(255,255,255,.03) 2px,
 transparent 4px
 );
 
-animation:scan 8s linear infinite;
-z-index:100;
+pointer-events:none;
+
+animation:
+scan 8s linear infinite;
+
+opacity:.5;
+
 }
 
 @keyframes scan{
+
 from{
-transform:translateY(-100%);
+transform:
+translateY(-100%);
 }
+
 to{
-transform:translateY(100%);
+transform:
+translateY(100%);
 }
+
 }
 
 .frame{
-position:absolute;
-top:15px;
-left:15px;
-right:15px;
-bottom:15px;
 
-border:1px solid #ff2b2b;
+height:100%;
+
+border:1px solid #ff3030;
 
 box-shadow:
-0 0 15px red inset,
-0 0 20px rgba(255,0,0,.5);
 
-padding:20px;
+0 0 20px red inset,
+0 0 20px rgba(255,0,0,.3);
+
+padding:12px;
+
+display:flex;
+
+flex-direction:column;
+
 }
 
 .header{
+
 display:flex;
 justify-content:space-between;
-font-size:20px;
-border-bottom:1px solid #ff2b2b;
-padding-bottom:10px;
+
+font-size:14px;
+
+border-bottom:
+1px solid #aa2222;
+
+padding-bottom:8px;
+
 }
 
 .title{
-font-size:14px;
+
+font-size:12px;
+
+line-height:1.6;
+
 margin-top:10px;
-line-height:1.8;
+
+opacity:.9;
+
 }
 
 #status{
-font-size:40px;
-margin-top:15px;
+
+margin-top:10px;
+
+font-size:clamp(
+28px,
+8vw,
+45px
+);
+
+color:#ff4040;
 
 text-shadow:
-0 0 10px red,
-0 0 20px red;
+0 0 10px red;
 
-animation:glitch .2s infinite;
+animation:
+glitch .25s infinite;
+
 }
 
 @keyframes glitch{
 
 25%{
-transform:translate(-2px);
+transform:
+translateX(-2px)
 }
 
 50%{
-transform:translate(2px);
+transform:
+translateX(2px)
 }
 
 75%{
-transform:translate(-1px);
+transform:
+translateX(-1px)
 }
 
 }
 
-.cameraWrap{
+.cameraArea{
+
 position:relative;
-margin-top:20px;
+
+margin-top:15px;
+
+flex:1;
+
 display:flex;
+
 justify-content:center;
+
+align-items:center;
+
+overflow:hidden;
+
 }
 
 video{
 
-width:90vw;
-max-width:430px;
+width:100%;
+height:100%;
 
-border:1px solid red;
+object-fit:cover;
+
+border:1px solid #ff3030;
 
 filter:
-contrast(1.2)
-brightness(.9);
+brightness(.9)
+contrast(1.2);
 
 }
 
 .target{
 
 position:absolute;
-width:220px;
-height:220px;
 
-border:2px solid #ff2b2b;
+width:58vw;
+height:58vw;
 
-top:50%;
-left:50%;
+max-width:260px;
+max-height:260px;
 
-transform:
-translate(-50%,-50%);
+border:
+2px solid red;
+
+box-shadow:
+0 0 20px red;
+
 }
 
 .corner{
+
 position:absolute;
-width:20px;
-height:20px;
+
+width:24px;
+height:24px;
+
 border:3px solid red;
+
 }
 
 .c1{
@@ -164,90 +242,95 @@ border-bottom:none;
 }
 
 .c3{
-bottom:-3px;
 left:-3px;
+bottom:-3px;
 border-right:none;
 border-top:none;
 }
 
 .c4{
-bottom:-3px;
 right:-3px;
+bottom:-3px;
 border-left:none;
 border-top:none;
 }
 
 .log{
 
-margin-top:20px;
-font-size:14px;
-height:160px;
-overflow:hidden;
+margin-top:10px;
+
+height:90px;
+
+overflow:auto;
+
+font-size:11px;
+
+padding:8px;
 
 border:1px solid #401010;
-padding:10px;
-background:black;
+
+background:#000;
+
+line-height:1.6;
 
 }
 
-.typing:after{
-content:"_";
-animation:blink 1s infinite;
-}
+.footer{
 
-@keyframes blink{
-50%{
-opacity:0;
-}
-}
+margin-top:8px;
 
-.small{
+display:flex;
 
-position:absolute;
-bottom:20px;
-left:20px;
+justify-content:
+space-between;
 
-font-size:12px;
+font-size:10px;
+
 opacity:.7;
+
 }
 
 </style>
-
 </head>
 
 <body>
 
-<div class="scan"></div>
-
 <div class="frame">
 
 <div class="header">
-<div>▣ SYSTEM MESSAGE</div>
-<div>SYS-001</div>
+
+<div>
+▣ SYSTEM MESSAGE
+</div>
+
+<div>
+SYS-001
+</div>
+
 </div>
 
 <div class="title">
 
-接続要求を確認。<br>
+接続要求確認<br>
+対象インスタンス<br>
 
-対象インスタンス：<br>
-
-《 Dendrobium 》<br><br>
-
-参加者同期プロセス開始
+《 DENDROBIUM 》
 
 </div>
 
 <div id="status">
+
 ERROR
+
 </div>
 
-<div class="cameraWrap">
+<div class="cameraArea">
 
 <video
 id="video"
 autoplay
-playsinline></video>
+playsinline>
+</video>
 
 <div class="target">
 
@@ -262,14 +345,22 @@ playsinline></video>
 
 <div
 id="log"
-class="log typing">
+class="log">
 
-通信待機...
+> waiting...<br>
 
 </div>
 
-<div class="small">
-SESSION START : 2026.08.07
+<div class="footer">
+
+<div>
+SESSION 2026.08.07
+</div>
+
+<div>
+CAM:ACTIVE
+</div>
+
 </div>
 
 </div>
@@ -292,35 +383,47 @@ const pattern=[
 ];
 
 const video=
-document.getElementById("video");
+document.getElementById(
+"video"
+);
 
 const canvas=
-document.getElementById("canvas");
+document.getElementById(
+"canvas"
+);
 
 const ctx=
-canvas.getContext("2d");
+canvas.getContext(
+"2d"
+);
 
 const status=
-document.getElementById("status");
+document.getElementById(
+"status"
+);
 
 const log=
-document.getElementById("log");
+document.getElementById(
+"log"
+);
 
 function addLog(t){
 
 log.innerHTML+=
-"<br>> "+t;
+"> "+t+"<br>";
 
 log.scrollTop=
 log.scrollHeight;
 
 }
 
-navigator.mediaDevices
+navigator
+.mediaDevices
 .getUserMedia({
 
 video:{
-facingMode:"environment"
+facingMode:
+"environment"
 }
 
 })
@@ -330,8 +433,11 @@ facingMode:"environment"
 video.srcObject=
 stream;
 
+status.innerHTML=
+"SCANNING";
+
 addLog(
-"CAMERA CONNECTED"
+"camera online"
 );
 
 setInterval(
@@ -340,10 +446,14 @@ checkPattern,
 );
 
 })
-.catch(e=>{
+
+.catch(()=>{
+
+status.innerHTML=
+"ERROR";
 
 addLog(
-"CAMERA ERROR"
+"camera denied"
 );
 
 });
@@ -351,11 +461,20 @@ addLog(
 function sample(x,y){
 
 let sum=0;
+
 let count=0;
 
-for(let dx=-4;dx<=4;dx++){
+for(
+let dx=-4;
+dx<=4;
+dx++
+){
 
-for(let dy=-4;dy<=4;dy++){
+for(
+let dy=-4;
+dy<=4;
+dy++
+){
 
 let d=
 ctx.getImageData(
@@ -382,8 +501,9 @@ return sum/count;
 
 function checkPattern(){
 
-if(video.videoWidth==0)
-return;
+if(
+video.videoWidth==0
+)return;
 
 canvas.width=
 video.videoWidth;
@@ -404,8 +524,9 @@ let h=
 canvas.height;
 
 let size=
-Math.min(w,h)
-*.45;
+Math.min(
+w,h
+)*0.45;
 
 let sx=
 (w-size)/2;
@@ -439,10 +560,11 @@ py
 );
 
 let val=
-(gray<128)?1:0;
+gray<128?1:0;
 
 if(
-val!=
+val
+!=
 pattern[y][x]
 ){
 
@@ -460,23 +582,23 @@ status.innerHTML=
 "ACCESS";
 
 addLog(
-"PATTERN ACCEPTED"
+"pattern accepted"
 );
 
 addLog(
-"VOICE CHAT UNLOCK"
+"visual link unlocked"
 );
 
-addLog(
-"VISUAL LINK READY"
+navigator.vibrate?.(
+[100,50,100]
 );
 
 setTimeout(()=>{
 
 location.href=
-"next.html";
+"next.html"
 
-},2500);
+},2000);
 
 }
 
