@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>5×5パターン認識</title>
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:white;
+    text-align:center;
+    font-family:sans-serif;
+}
+video{
+    width:95vw;
+    max-width:500px;
+    border:3px solid white;
+    margin-top:20px;
+}
+#status{
+    font-size:22px;
+    margin:15px;
+}
+canvas{
+ display:none;
+}
+</style>
+</head>
+<body>
+
+<h2>穴あきシート認識</h2>
+
+<div id="status">
+カメラ起動中...
+</div>
+
+<video id="video" autoplay playsinline></video>
+<canvas id="canvas"></canvas>
+
+<script>
+
+const pattern=[
+[1,0,0,0,0],
+[0,0,1,0,0],
+[0,0,0,0,1],
+[0,1,0,0,0],
+[0,0,0,1,0]
+];
+
+const video=document.getElementById("video");
+const canvas=document.getElementById("canvas");
+const ctx=canvas.getContext("2d");
+
+navigator.mediaDevices.getUserMedia({
+video:{
+ facingMode:"environment"
+}
+})
+.then(stream=>{
+ video.srcObject=stream;
+ document.getElementById(
+ "status"
+ ).innerText="認識待機";
+ start();
+});
+
+function start(){
+
+setInterval(checkPattern,300);
+
+}
+
+function checkPattern(){
+
+if(video.videoWidth===0)return;
+
+canvas.width=video.videoWidth;
+canvas.height=video.videoHeight;
+
+ctx.drawImage(
+video,
+0,
+0
+);
+
+let w=canvas.width;
+let h=canvas.height;
+
+let size=Math.min(w,h)*0.6;
+
+let startX=(w-size)/2;
+let startY=(h-size)/2;
+
+let cell=size/5;
+
+let result=[];
+
+for(let y=0;y<5;y++){
+
+result[y]=[];
+
+for(let x=0;x<5;x++){
+
+let px=
+startX+x*cell+cell/2;
+
+let py=
+startY+y*cell+cell/2;
+
+let d=ctx.getImageData(
+px,
+py,
+1,
+1
+).data;
+
+let gray=
+(d[0]+d[1]+d[2])/3;
+
+result[y][x]=(gray<128)?1:0;
+
+}
+
+}
+
+let ok=true;
+
+for(let y=0;y<5;y++){
+for(let x=0;x<5;x++){
+
+if(
+result[y][x]
+!=pattern[y][x]
+){
+
+ok=false;
+
+}
+}
+}
+
+if(ok){
+
+document.getElementById(
+"status"
+).innerText="認識成功";
+
+location.href=
+"next.html";
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
