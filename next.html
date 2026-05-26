@@ -2,22 +2,246 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>成功</title>
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>Dendrobium SYSTEM</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+rel="stylesheet">
 
 <style>
+
 body{
- background:black;
- color:white;
- text-align:center;
- margin-top:100px;
- font-size:40px;
+background:black;
+color:#ff3030;
+font-family:'Share Tech Mono',monospace;
+margin:0;
+overflow:hidden;
 }
+
+.scan{
+
+position:fixed;
+width:100%;
+height:100%;
+pointer-events:none;
+
+background:
+repeating-linear-gradient(
+transparent 0px,
+rgba(255,255,255,.02) 2px,
+transparent 4px
+);
+
+animation:scan 8s linear infinite;
+}
+
+@keyframes scan{
+
+from{
+transform:translateY(-100%);
+}
+
+to{
+transform:translateY(100%);
+}
+
+}
+
+.frame{
+
+position:absolute;
+top:30px;
+left:30px;
+right:30px;
+bottom:30px;
+
+border:1px solid #ff2020;
+
+box-shadow:
+0 0 20px #f00 inset,
+0 0 20px #f00;
+
+padding:30px;
+}
+
+.title{
+
+font-size:32px;
+border-bottom:
+1px solid #f00;
+
+padding-bottom:10px;
+
+}
+
+.warn{
+
+margin-top:30px;
+font-size:22px;
+}
+
+.big{
+
+font-size:60px;
+margin-top:20px;
+
+text-shadow:
+0 0 10px red,
+0 0 30px red;
+
+animation:
+glitch .2s infinite;
+}
+
+@keyframes glitch{
+
+0%{
+transform:translate(0);
+}
+
+25%{
+transform:
+translate(-2px,1px);
+}
+
+50%{
+transform:
+translate(2px,-1px);
+}
+
+75%{
+transform:
+translate(-1px,-2px);
+}
+
+}
+
+.box{
+
+margin-top:40px;
+
+border:1px solid #f00;
+padding:20px;
+
+}
+
+.unlock{
+
+color:white;
+margin-top:20px;
+}
+
+.typing:after{
+
+content:"_";
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+
+50%{
+opacity:0;
+}
+
+}
+
 </style>
 
 </head>
+
 <body>
 
-未来を切り開け
+<div class="scan"></div>
+
+<div class="frame">
+
+<div class="title">
+▣ SYSTEM MESSAGE
+</div>
+
+<div class="warn">
+
+接続要求を確認
+
+</div>
+
+<div class="big">
+DENDROBIUM
+</div>
+
+<div class="box">
+
+通信状態：
+
+<div id="status">
+
+ERROR
+
+</div>
+
+</div>
+
+<div class="unlock">
+
+<div id="text"
+class="typing"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const msg=[
+
+"参加者同期プロセス開始",
+"通信障害検出",
+"機能ロック確認",
+"TEXT CHAT解放",
+"VOICE LOCK",
+"CAMERA LOCK",
+"VISUAL LINK LOCK",
+"条件達成待機..."
+
+];
+
+let i=0;
+
+function type(){
+
+if(i<msg.length){
+
+document
+.getElementById(
+"text"
+)
+.innerHTML+=
+msg[i]+"<br>";
+
+i++;
+
+setTimeout(type,900);
+
+}
+
+}
+
+type();
+
+setTimeout(()=>{
+
+document
+.getElementById(
+"status"
+)
+innerHTML=
+"CONNECTED";
+
+},6000)
+
+</script>
 
 </body>
 </html>
